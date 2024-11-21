@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import CurrencyExchangeRates
 from .serializers import Currencies_Serializer,Currencies_Exchange_Serializer
-
+from rest_framework import status
 class Get_Exchange_Rates(APIView):
     def get(self, request, base, target):
         
@@ -22,10 +22,11 @@ class Currencies(APIView):
         currencies_target = CurrencyExchangeRates.objects.values_list('target',flat=True).distinct()
         currencies=list(currencies_base)
         currencies.extend(list(currencies_target))
-        currencies=set(currencies)
+        currencies=list(set(currencies))
+        currencies.sort()
         result = [{"code": currency} for currency in currencies]
         if currencies_base and currencies_base:
-            return Response(result)
+            return Response(result,status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'No data found'}, status=404)
     
