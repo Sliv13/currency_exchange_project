@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import CurrencyExchangeRates
 from .serializers import Currencies_Serializer,Currencies_Exchange_Serializer
 from rest_framework import status
+
 class Get_Exchange_Rates(APIView):
     def get(self, request, base, target):
         

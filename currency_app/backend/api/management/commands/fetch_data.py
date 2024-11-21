@@ -7,9 +7,13 @@ import os
 from dotenv import load_dotenv
 
 class Command(BaseCommand):
-    
-
-    def handle(self, *args, **kwargs):
+    def add_arguments(self, parser):
+        parser.add_argument('--testing', type=bool,default=False)
+        parser.add_argument('--base', type=str,default='')
+        parser.add_argument('--target', type=str,default='')
+        parser.add_argument('--rate', type=float,default=0.0)
+        
+    def handle(self,*args, **kwargs):
         # get or create superuser
         load_dotenv()
         user = User.objects.filter(username='admin').first()
@@ -31,4 +35,11 @@ class Command(BaseCommand):
                     target=target_currency,
                     exchange_rate=price,
                 )
+                if kwargs['testing']:
+                    CurrencyExchangeRates.objects.create(
+                    base=kwargs['base'],
+                    target=kwargs['target'],
+                    exchange_rate=kwargs['rate'],
+                )
+                    
           
