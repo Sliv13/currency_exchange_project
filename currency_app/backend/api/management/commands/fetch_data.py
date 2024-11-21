@@ -19,8 +19,8 @@ class Command(BaseCommand):
         user = User.objects.filter(username='admin').first()
         if not user:
             user = User.objects.create_superuser(username='admin', password=os.getenv('ADMIN_PASSWORD'))
-        base_currencies=("EUR","USD","PLN","PLN")
-        target_currencies=("USD","JPY","USD","CHF")
+        base_currencies=("EUR","USD","PLN","PLN",'CHF')
+        target_currencies=("USD","JPY","USD","CHF",'JPY')
         for base_currency,target_currency in zip(base_currencies,target_currencies):
                 if base_currency == target_currency:
                     continue
