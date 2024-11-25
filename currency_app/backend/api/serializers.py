@@ -1,4 +1,4 @@
-from .models import CurrencyExchangeRates
+from .models import CurrencyExchangeRates,Currency
 from rest_framework import serializers
 
 class Currencies_Exchange_Serializer(serializers.ModelSerializer):
@@ -10,11 +10,12 @@ class Currencies_Exchange_Serializer(serializers.ModelSerializer):
     
     
     def get_currency_pair(self, obj):
-        return f"{obj.base}{obj.target}"
+        return f"{obj.base.code}{obj.target.code}"
         
 
-class Currencies_Serializer(serializers.Serializer):
-    code = serializers.SerializerMethodField()
+class Currencies_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model=Currency
+        fields=['code']
     
-    def get_codes(self,obj):
-        return obj
+    

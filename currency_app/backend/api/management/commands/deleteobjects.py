@@ -12,4 +12,4 @@ class Command(BaseCommand):
                 # Save to database
                 CurrencyExchangeRates.objects.all().delete()
           
-        # create CurrencyExchangeRatess - name, desc, price, stock, image
+        
